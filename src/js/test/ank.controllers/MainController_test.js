@@ -6,7 +6,11 @@ describe("MainController", function () {
     var $controller;
     var $scope;
     var mainController;
-    var textExtender = {
+    var textExtender;
+    var textStar;
+
+    //hijacking (mocking) service: textExtender, in this way we need to pass the service along with $scope to the controller constructor:         mainController = $controller("MainController", {    $scope: $scope,        textExtender: textExtender});
+    textExtender = {
         addFirstName: function (input) {
             return input.concat(" * ", "qwerf");
         }
@@ -15,9 +19,25 @@ describe("MainController", function () {
     beforeEach(function () {
         module("ank");
 
+        //hijacking (mocking) service: textSearch, in this way you don't need to pass the service to controller constructor or inject it to the test spec, except if you wanna spy on it.
+        module(function ($provide) {
+            $provide.factory("textSearch", textSearch);
+
+            function textSearch () {
+                return {
+                    doBasicSearch: doBasicSearch
+                };
+
+                function doBasicSearch (word, term) {
+                    return word.toString().indexOf(term);
+                }
+            }
+        });
+
         inject(function ($injector) {
             $controller = $injector.get("$controller");
             $scope = $injector.get("$rootScope").$new();
+            textStar = $injector.get("textStar");
         });
 
         mainController = $controller("MainController", {
@@ -25,6 +45,10 @@ describe("MainController", function () {
             textExtender: textExtender
         });
 
+        //hijacking (mocking) service: textStar, in this way we need to inject the service to the test spec before being able to spy on it: textStar = $injector.get("textStar");
+        spyOn(textStar, "addThreeStar").and.callFake(function (input) {
+            return input.toString().concat("AAA");
+        });
         spyOn(textExtender, "addFirstName").and.callThrough();
         textExtender.addFirstName("llll");
         expect(textExtender.addFirstName).toHaveBeenCalled();
@@ -59,8 +83,20 @@ describe("MainController", function () {
         it("should return correct value for a string with 10 letters", function () {
             expect(mainController.calculateLength('abcdef ghi')).toBe(18);
         });
+    });
 
-        it("should be called", function () {
+    describe("calculateWithStar", function () {
+        it("should return correct length after adding star", function () {
+            expect(mainController.calculateWithStar("hamid")).toBe(8);
+        });
+    });
+
+    describe("analyzeSearchResult", function () {
+        it("should return 'Success'", function () {
+            expect(mainController.analyzeSearchResult("hamid", "mi")).toBe("Success");
+        });
+        it("should return 'Error'", function () {
+            expect(mainController.analyzeSearchResult("hamid", "imi")).toBe("Error");
         });
     });
 });

@@ -3,6 +3,8 @@
  */
 
 (function () {
+    'use strict';
+
     angular.module("ank.services")
         .factory("textExtender", textExtender);
 

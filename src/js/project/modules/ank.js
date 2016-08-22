@@ -3,4 +3,4 @@
  * Created by hamidbehnam on 8/20/16.
  */
 
-angular.module("ank", ["ank.controllers"]);
+angular.module("ank", ["ank.controllers", "ank.services"]);

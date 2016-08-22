@@ -3,11 +3,30 @@
  */
 
 (function () {
-    angular.module("ank.controllers")
-        .controller("MainController", ["$scope", MainController]);
+    'use strict';
 
-    function MainController($scope) {
+    angular.module("ank.controllers")
+        .controller("MainController", ["$scope", "textExtender", MainController]);
+
+    function MainController($scope, textExtender) {
         var vm = this;
-        vm.testField = "this is the testField for the MainController! sdfsdf";
+        vm.testField = "this is the testField for the MainController!";
+        vm.doSomething = doSomething;
+        vm.testSomething = testSomething;
+        vm.calculateLength = calculateLength;
+
+        vm.testSomething();
+
+        function doSomething () {
+            return "this is the doSomething method!";
+        }
+
+        function testSomething () {
+            return "this is the testSomething method!";
+        }
+
+        function calculateLength (input) {
+            return textExtender.addFirstName(input).length;
+        }
     }
 })();

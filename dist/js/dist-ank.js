@@ -37,7 +37,7 @@ angular.module("ank.services", []);
      * @param {service} $scope $scope service
      * @param {service} textExtender textExtender service
      * @param {service} textStar textStar service
-     * @param {service} textSearch textSearch service
+     * @param {service} textSearch textSearch service..
      * @constructor
      */
     function MainController($scope, textExtender, textStar, textSearch) {

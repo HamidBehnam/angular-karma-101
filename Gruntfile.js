@@ -56,7 +56,7 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: ['src/js/project/**/*.js'],
-                tasks: ['jshint', 'concat', 'jsdoc']
+                tasks: ['jshint', 'concat']
             }
         },
         jsdoc : {
@@ -86,5 +86,9 @@ module.exports = function(grunt) {
         'jshint',
         'jsdoc',
         'watch'
+    ]);
+
+    grunt.registerTask('gendoc', [
+        'jsdoc'
     ]);
 };

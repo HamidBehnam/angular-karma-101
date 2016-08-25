@@ -1,13 +1,26 @@
 /**
  * Created by hamidbehnam on 8/20/16.
  */
-
+/**
+ * Controllers
+ * @namespace Controllers
+ */
 (function () {
     'use strict';
 
     angular.module("ank.controllers")
         .controller("MainController", ["$scope", "textExtender", "textStar", "textSearch", MainController]);
 
+    /**
+     * @namespace MainController
+     * @memberOf Controllers
+     * @desc MainController is the first controller which will be loaded when the page is loaded.
+     * @param {service} $scope $scope service
+     * @param {service} textExtender textExtender service
+     * @param {service} textStar textStar service
+     * @param {service} textSearch textSearch service
+     * @constructor
+     */
     function MainController($scope, textExtender, textStar, textSearch) {
         var vm = this;
         vm.testField = "this is the testField for the MainController!";

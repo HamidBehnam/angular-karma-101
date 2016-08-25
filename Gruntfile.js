@@ -56,7 +56,15 @@ module.exports = function(grunt) {
             },
             scripts: {
                 files: ['src/js/project/**/*.js'],
-                tasks: ['jshint', 'concat']
+                tasks: ['jshint', 'concat', 'jsdoc']
+            }
+        },
+        jsdoc : {
+            dist : {
+                src: 'src/js/project/**/*.js',
+                options: {
+                    destination: 'src/js/doc'
+                }
             }
         }
     });
@@ -70,11 +78,13 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-less');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-jsdoc');
 
     grunt.registerTask('all', [
         'less',
         'concat',
         'jshint',
+        'jsdoc',
         'watch'
     ]);
 };
